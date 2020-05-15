@@ -1,7 +1,11 @@
 import React from 'react';
-
+import { Header } from 'Components';
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      <Header />
+    </div>
+  );
 }
 
 export default App;
