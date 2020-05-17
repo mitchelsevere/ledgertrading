@@ -1,0 +1,16 @@
+.option {
+  letter-spacing: 1px;
+  text-align: right;
+}
+
+.option td {
+  padding: 4px 10px;
+}
+
+.option:nth-child(even) {
+  background-color: #14141e;
+}
+
+.option:nth-child(odd) {
+  background-color: #08080c;
+}
