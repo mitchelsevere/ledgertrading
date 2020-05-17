@@ -1,18 +1,20 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    app: ['babel-polyfill', './src/index.js']
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   mode: 'development',
   watch: true,
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      Components: path.resolve(__dirname, 'src/components/'),
-    },
+      Components: path.resolve(__dirname, 'src/components/')
+    }
   },
   module: {
     rules: [
@@ -22,17 +24,35 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-          },
-        },
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
       },
       {
-        test: /\.s?css/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        test: /\.css/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true
+            }
+          }
+        ],
+        include: /\.module\.css$/
       },
-    ],
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+        exclude: /\.module\.css$/
+      }
+    ]
   },
   devServer: {
     publicPath: '/dist/',
-  },
+    proxy: {
+      '/api': 'http://localhost:3000'
+    }
+  }
 };
