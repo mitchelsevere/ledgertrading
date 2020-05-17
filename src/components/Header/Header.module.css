@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #375a7f;
+  padding: 20px 20px 15px;
+  margin-bottom: 5px;
+}
+
+.logo {
+  width: 175px;
+  height: auto;
+  cursor: pointer;
+}
+
+.login {
+  color: #fff;
+  font-size: 0.7rem;
+  text-decoration: none;
+  letter-spacing: 1px;
+  font-weight: 100;
+}
