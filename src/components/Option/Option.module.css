@@ -7,6 +7,18 @@
   padding: 4px 10px;
 }
 
+.option td:hover {
+  cursor: pointer;
+}
+
+.strike {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.strike:hover {
+  pointer-events: none;
+}
+
 .option:nth-child(even) {
   background-color: #14141e;
 }
