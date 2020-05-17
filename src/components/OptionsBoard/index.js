@@ -2,67 +2,25 @@ import React from 'react';
 import { Option } from 'Components';
 import styles from './OptionsBoard.module.css';
 
-const data = [
-  {
-    c_oi: 5,
-    c_bid: 4400,
-    c_ask: 9900,
-    strike: 6600,
-    p_bid: 3100,
-    p_ask: 111,
-    p_oi: 2
-  },
-  {
-    c_oi: 5,
-    c_bid: 4400,
-    c_ask: 9900,
-    strike: 6600,
-    p_bid: 3100,
-    p_ask: 111,
-    p_oi: 2
-  },
-  {
-    c_oi: 5,
-    c_bid: 4400,
-    c_ask: 9900,
-    strike: 6600,
-    p_bid: 3100,
-    p_ask: 111,
-    p_oi: 2
-  },
-  {
-    c_oi: 5,
-    c_bid: 4400,
-    c_ask: 9900,
-    strike: 6600,
-    p_bid: 3100,
-    p_ask: 111,
-    p_oi: 2
-  },
-  {
-    c_oi: 5,
-    c_bid: 4400,
-    c_ask: 9900,
-    strike: 6600,
-    p_bid: 3100,
-    p_ask: 111,
-    p_oi: 2
-  }
-];
-
-function OptionsBoard() {
-  const options = data.map((option, i) => (
-    <Option
-      key={`option${i}`}
-      coi={option.c_oi}
-      cbid={option.c_bid}
-      cask={option.c_ask}
-      strike={option.strike}
-      pbid={option.p_bid}
-      pask={option.p_ask}
-      poi={option.p_oi}
-    />
-  ));
+function OptionsBoard(props) {
+  const options =
+    props.options &&
+    props.options.map((option, i) => {
+      const [call, put] = option;
+      return (
+        <Option
+          key={`option${i}`}
+          date={call.date}
+          callOi={call.open_interest}
+          callBid={call.bid}
+          callAsk={call.ask}
+          strike={call.strike_price}
+          putBid={put.bid}
+          putAsk={put.ask}
+          putOi={put.open_interest}
+        />
+      );
+    });
   return (
     <table className={styles.options}>
       <thead>
