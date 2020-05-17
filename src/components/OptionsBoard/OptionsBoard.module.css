@@ -1,0 +1,32 @@
+.options {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.columnHeader {
+  background: #14141e;
+}
+
+.columnHeader th {
+  padding: 10px;
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-align: right;
+  position: relative;
+}
+
+.columnHeader th:after {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 1px;
+  height: 12px;
+  background-color: #757575;
+  content: '';
+  margin-right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+}
