@@ -11,18 +11,42 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/api/contracts', (req, res) => {
-  fetch(
-    'https://trade.ledgerx.com/api/contracts?after_ts=2020-05-21 21:00:00&limit=200'
-  )
-    .then((res) => res.json())
-    .then((data) => res.status(200).json(data));
-});
+app.get('/api/data', async (req, res) => {
+  const booksResponse = await fetch('https://trade.ledgerx.com/api/book-tops');
+  const books = await booksResponse.json();
+  const booksData = books.data.reduce((acc, curr) => {
+    const id = curr.contract_id;
+    delete curr.contract_id;
+    acc[id] = curr;
+    return acc;
+  }, {});
 
-app.get('/api/books', (req, res) => {
-  fetch('https://trade.ledgerx.com/api/book-tops')
-    .then((res) => res.json())
-    .then((data) => res.status(200).json(data));
+  const contractResponse = await fetch(
+    'https://trade.ledgerx.com/api/contracts?after_ts=2020-05-21 21:00:00&limit=200'
+  );
+  const contracts = await contractResponse.json();
+  const mergeData = contracts.data
+    .reduce((acc, curr) => {
+      const id = curr.id;
+      const date = new Date(curr.date_expires).toLocaleDateString();
+      booksData[id] = Object.assign({}, booksData[id], curr, { date });
+      acc.push(booksData[id]);
+      return acc;
+    }, [])
+    .filter((contract) => contract.active === true)
+    .reverse()
+    .reduce(
+      (acc, curr, i) => {
+        if (i % 2 === 0 && i !== 0) {
+          acc.total.push(acc.strikePairs);
+          acc.strikePairs = [];
+        }
+        acc.strikePairs.push(curr);
+        return acc;
+      },
+      { strikePairs: [], total: [] }
+    );
+  return res.status(200).json(mergeData.total);
 });
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
