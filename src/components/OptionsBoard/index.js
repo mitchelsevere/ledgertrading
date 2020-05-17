@@ -1,5 +1,6 @@
 import React from 'react';
 import { Option } from 'Components';
+import styles from './OptionsBoard.module.css';
 
 const data = [
   {
@@ -9,7 +10,7 @@ const data = [
     strike: 6600,
     p_bid: 3100,
     p_ask: 111,
-    p_oi: 2,
+    p_oi: 2
   },
   {
     c_oi: 5,
@@ -18,8 +19,35 @@ const data = [
     strike: 6600,
     p_bid: 3100,
     p_ask: 111,
-    p_oi: 2,
+    p_oi: 2
   },
+  {
+    c_oi: 5,
+    c_bid: 4400,
+    c_ask: 9900,
+    strike: 6600,
+    p_bid: 3100,
+    p_ask: 111,
+    p_oi: 2
+  },
+  {
+    c_oi: 5,
+    c_bid: 4400,
+    c_ask: 9900,
+    strike: 6600,
+    p_bid: 3100,
+    p_ask: 111,
+    p_oi: 2
+  },
+  {
+    c_oi: 5,
+    c_bid: 4400,
+    c_ask: 9900,
+    strike: 6600,
+    p_bid: 3100,
+    p_ask: 111,
+    p_oi: 2
+  }
 ];
 
 function OptionsBoard() {
@@ -36,9 +64,9 @@ function OptionsBoard() {
     />
   ));
   return (
-    <table>
+    <table className={styles.options}>
       <thead>
-        <tr>
+        <tr className={styles.columnHeader}>
           <th>OI</th>
           <th>Bid</th>
           <th>Ask</th>

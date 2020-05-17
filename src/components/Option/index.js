@@ -1,8 +1,9 @@
 import React from 'react';
+import styles from './Option.module.css';
 
 function Option(props) {
   return (
-    <tr>
+    <tr className={styles.option}>
       <td>{props.coi}</td>
       <td>{props.cbid}</td>
       <td>{props.cask}</td>

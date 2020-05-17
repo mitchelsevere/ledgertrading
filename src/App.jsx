@@ -1,9 +1,11 @@
 import React from 'react';
 import { Header, OptionsPane } from 'Components';
+import styles from './App.module.css';
+
 function App() {
   return (
-    <div>
-      <Header />
+    <div className={styles.container}>
+      <Header header={styles.header} />
       <OptionsPane />
     </div>
   );

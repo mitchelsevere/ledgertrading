@@ -1,11 +1,13 @@
 import React from 'react';
 import { logo } from './logo';
-
-function Header() {
+import styles from './Header.module.css';
+function Header(props) {
   return (
-    <nav className="navbar">
-      <img src={logo} alt="LedgerX Logo" />
-      <a href="#"> Log in</a>
+    <nav className={`${props.header} ${styles.header}`}>
+      <img className={styles.logo} src={logo} alt="LedgerX Logo" />
+      <a className={styles.login} href="#">
+        Log in
+      </a>
     </nav>
   );
 }
