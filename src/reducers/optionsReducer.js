@@ -2,14 +2,17 @@ import * as types from '../constants';
 
 const initialState = {
   data: [],
-  currentDate: ''
+  currentDate: 0
 };
 
 const optionsReducer = (state = initialState, action) => {
+  const { payload } = action;
   switch (action.type) {
     case types.GET_DATA: {
-      console.log('hitting reducers', action.payload);
-      return { ...state, data: action.payload };
+      return { ...state, data: payload };
+    }
+    case types.SET_CURRENT_DATE: {
+      return { ...state, currentDate: payload };
     }
     default: {
       return state;
