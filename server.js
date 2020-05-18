@@ -35,15 +35,21 @@ app.get('/api/data', async (req, res) => {
     .filter((contract) => contract.active === true)
     .reverse()
     .reduce(
-      (acc, curr, i) => {
-        if (i % 2 === 0 && i !== 0) {
-          acc.total.push(acc.strikePairs);
-          acc.strikePairs = [];
+      (acc, curr, i, arr) => {
+        if (i === arr.length - 1) acc.total.push(acc.contracts);
+        if (acc.contracts[acc.index - 1]) {
+          if (acc.contracts[acc.index - 1].date !== curr.date) {
+            acc.contracts.sort((a, b) => a.strike_price - b.strike_price);
+            acc.total.push(acc.contracts);
+            acc.contracts = [];
+            acc.index = 0;
+          }
         }
-        acc.strikePairs.push(curr);
+        acc.contracts.push(curr);
+        acc.index += 1;
         return acc;
       },
-      { strikePairs: [], total: [] }
+      { contracts: [], total: [], index: 0 }
     );
   return res.status(200).json(mergeData.total);
 });
