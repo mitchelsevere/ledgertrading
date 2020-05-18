@@ -5,10 +5,24 @@
 
 .option td {
   padding: 4px 10px;
+  width: calc(100% / 7);
 }
 
 .option td:hover {
   cursor: pointer;
+}
+
+.date {
+  display: block;
+  background: #17719d;
+  text-align: center;
+}
+
+.date td {
+  font-weight: 700;
+  width: 100vw;
+  padding: 6px;
+  letter-spacing: 1px;
 }
 
 .strike {
