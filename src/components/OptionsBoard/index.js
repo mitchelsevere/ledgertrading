@@ -6,20 +6,23 @@ function OptionsBoard(props) {
   const options =
     props.options &&
     props.options.map((option, i) => {
-      const [call, put] = option;
-      return (
-        <Option
-          key={`option${i}`}
-          date={call.date}
-          callOi={call.open_interest}
-          callBid={call.bid}
-          callAsk={call.ask}
-          strike={call.strike_price}
-          putBid={put.bid}
-          putAsk={put.ask}
-          putOi={put.open_interest}
-        />
-      );
+      return option.map((_, j) => {
+        if (j % 2 === 0) {
+          return (
+            <Option
+              key={`option${i + j}`}
+              date={option[j].date}
+              callOi={option[j].open_interest}
+              callBid={option[j].bid}
+              callAsk={option[j].ask}
+              strike={option[j].strike_price}
+              putBid={option[j + 1].bid}
+              putAsk={option[j + 1].ask}
+              putOi={option[j + 1].open_interest}
+            />
+          );
+        }
+      });
     });
   return (
     <table className={styles.options}>
