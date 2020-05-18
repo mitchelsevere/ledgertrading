@@ -1,11 +1,11 @@
 const express = require('express');
 const fetch = require('node-fetch');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 
 const PORT = 3000;
-
-// creating a proxy to access ledger's cross origin server
+// custom proxy to access ledger's cross origin server
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   next();
@@ -16,7 +16,6 @@ app.get('/api/data', async (req, res) => {
   const books = await booksResponse.json();
   const booksData = books.data.reduce((acc, curr) => {
     const id = curr.contract_id;
-    delete curr.contract_id;
     acc[id] = curr;
     return acc;
   }, {});
@@ -49,4 +48,14 @@ app.get('/api/data', async (req, res) => {
   return res.status(200).json(mergeData.total);
 });
 
-app.listen(PORT, () => console.log(`listening on ${PORT}`));
+// proxy for websocket api
+const wsProxy = createProxyMiddleware('/ws', {
+  target: 'wss://trade.ledgerx.com/api/ws',
+  changeOrigin: true
+});
+
+app.get(wsProxy);
+
+app
+  .listen(PORT, () => console.log(`listening on ${PORT}`))
+  .on('upgrade', wsProxy.upgrade);
